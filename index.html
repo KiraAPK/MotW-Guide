@@ -1,167 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monster of the Week Guide</title>
+    <title>SECURE FILE 404-ALPHA | ENTITY DATABASE</title>
+
+    <!-- CLASSIFIED CSS STYLING -->
     <style>
+        :root {
+            /* Classified/Secure Dossier Palette */
+            --bg-color: #1c1c1c; /* Deep Charcoal Gray */
+            --card-bg: #292929; /* Slightly Lighter Card Background */
+            --text-color: #f0f0f0; /* Off-White for Readability */
+            --header-color: #ffffff; /* Pure White for Titles */
+            --accent-color: #cc0000; /* High-Contrast Red for CLASSIFIED markings */
+            --border-radius: 2px; /* Sharp, professional corners */
+            --box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+            --font-official: 'Verdana', 'Arial', sans-serif; /* Clean, professional font */
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: var(--font-official);
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
+            line-height: 1.6;
         }
 
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-        }
-
-        nav ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        nav ul li {
-            display: inline;
-            margin-right: 20px;
-        }
-
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        section {
-            padding: 20px;
-            display: none; /* Initially hide all sections */
-        }
-
-        footer {
-            background-color: #333;
-            color: #fff;
+        /* Header Styling */
+        .campaign-header {
+            background-color: var(--card-bg);
+            padding: 25px 20px;
             text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
+            border-bottom: 5px solid var(--accent-color);
+            margin-bottom: 30px;
+            box-shadow: var(--box-shadow);
         }
 
-        .tag {
-            color: #009688; /* Teal color */
+        .campaign-header h1 {
+            color: var(--accent-color);
+            margin-top: 0;
+            font-size: 2.5em;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .campaign-header p {
+            margin-bottom: 15px;
+            font-style: normal;
+            color: #b0b0b0;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+
+        #searchInput {
+            width: 90%;
+            max-width: 500px;
+            padding: 10px;
+            border: 1px solid var(--text-color);
+            border-radius: var(--border-radius);
+            background-color: #000000;
+            color: var(--text-color);
+            font-size: 1em;
+            text-transform: uppercase;
+        }
+
+        /* Monster Container */
+        .monster-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            padding: 30px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        /* Monster Card Styling */
+        .monster-card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 0 15px rgba(204, 0, 0, 0.2);
+            border: 1px solid #404040;
+        }
+
+        .monster-name {
+            color: var(--header-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 8px;
+            margin-top: 0;
+            margin-bottom: 5px;
+            font-size: 1.6em;
             font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .monster-tagline {
+            font-style: italic;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        .monster-section-header {
+            font-weight: bold;
+            color: var(--text-color);
+            text-transform: uppercase;
+            margin-top: 25px;
+            margin-bottom: 8px;
+            font-size: 1em;
+            padding-left: 10px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        /* Stats Section */
+        .monster-stats {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 8px 15px;
+            padding: 10px;
+            border: 1px solid #404040;
+            border-radius: var(--border-radius);
+            background-color: #242424;
+        }
+
+        .stat-label {
+            font-weight: bold;
+            color: #b0b0b0;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            color: var(--text-color);
+        }
+
+        /* Abilities and Weaknesses Lists */
+        .monster-abilities, .monster-weaknesses {
+            list-style-type: none;
+            padding-left: 0;
+            border: 1px dashed #3a3a3a;
+            padding: 10px;
+            border-radius: var(--border-radius);
+        }
+
+        .monster-abilities li, .monster-weaknesses li {
+            padding: 5px 0;
+            margin-bottom: 4px;
+            border-bottom: 1px dotted #3a3a3a;
+        }
+
+        .monster-abilities li:last-child, .monster-weaknesses li:last-child {
+            border-bottom: none;
+        }
+
+        .monster-abilities li strong {
+            color: var(--header-color);
+            text-transform: uppercase;
+        }
+
+        /* Keeper Notes (Official Memo/Log Feel) */
+        .monster-notes textarea {
+            width: 100%;
+            box-sizing: border-box; 
+            padding: 10px;
+            border: 1px solid var(--accent-color);
+            border-radius: var(--border-radius);
+            background-color: #000000;
+            color: #ffcc00; /* Yellow/Amber color for handwritten/typed notes */
+            resize: vertical;
+            min-height: 100px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Hide card when filtered by search */
+        .monster-card.hidden {
+            display: none;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .campaign-header h1 {
+                font-size: 1.8em;
+            }
+
+            .monster-container {
+                grid-template-columns: 1fr;
+                padding: 10px;
+            }
+
+            .monster-card {
+                padding: 20px;
+            }
         }
     </style>
 </head>
-
 <body>
-    <header>
-        <h1>Monster of the Week Guide</h1>
-        <nav>
-            <ul>
-                <li><a href="#" onclick="showSection('main-page')">Main Page</a></li>
-                <li><a href="#" onclick="showSection('hunting-guide')">Hunting Guide</a></li>
-                <li><a href="#" onclick="showSection('government-lore')">Government Lore</a></li>
-                <li><a href="#" onclick="showSection('monster-lore')">Monster Lore</a></li>
-            </ul>
-        </nav>
+
+    <header class="campaign-header">
+        <h1>PROJECT CHIMERA - ENTITY DATABASE</h1>
+        <p>SECURE FILE 404-ALPHA | ACCESS LEVEL 3 REQUIRED</p>
+        <input type="text" id="searchInput" placeholder="SEARCH ENTITY ID / CLASSIFICATION..." onkeyup="filterMonsters()">
     </header>
 
-    <section id="main-page">
-        The organisms residing throughout the United States of America range in viciousness and require control and study in order to protect the safety of citizens. A guide to the various creatures that have been discovered will be provided to all government-funded and approved agencies for the containment of monsters.
-    </section>
+    <main id="monsterContainer" class="monster-container">
+        
+        <!-- ENTITY DOSSIER 1: VAMPIRE (SANGUINE INFILTRATOR) -->
+        <div class="monster-card" data-name="ENTITY ID: V-98C - VAMPIRE">
+            <h2 class="monster-name">ENTITY ID: V-98C (VAMPIRE)</h2>
+            <div class="monster-tagline">CLASSIFICATION: HIGH-RISK INFECTIOUS VECTOR - DISPERSAL THREAT</div>
 
-    <section id="hunting-guide">
-        <p><a href= "humanoid.html"><span class="tag">Humanoid</span></a> - Any organism sharing a form similar to humans: Bipedal, human-like faces, or any other feature overlap. Humanoid monsters tend to be difficult to capture.</p>
-        <p><a href= "beastial.html"><span class="tag">Beastial</span></a> - Any organism sharing a form similar to typical “animals”. Beastial monsters have a tendency to be the most dangerous by pure strength.</p>
-        <p><a href= "shapeshifting.html"><span class="tag">Shapeshifting</span></a> - Any organism that can change form, this is an “ability” more than a true category and will have much overlap with other categories, leading it to act more as a sub-label.</p>
-        <p><a href= "carnivorous.html"><span class="tag">Carnivorous</span></a> - Bloodsuckers, flesh-eaters, or any other organism requiring the killing of humans to survive. This is a sub-label with overlap onto other categories.</p>
-        <p><a href= "neutral"><span class="tag">Neutral</span></a> - Monsters who do not directly/intentionally harm humans unprovoked. Not rare, as some monsters can be dangerous after being agitated or threatened.</p>
-    </section>
+            <div class="monster-section-header">Description / Profile (SANGUINE INFILTRATOR)</div>
+            <p class="monster-description">Subject is a living humanoid entity that sustains itself exclusively on whole blood, possessing superior physical durability against common diseases and displaying zero biological aging. Mythological accounts are highly inaccurate; subject possesses no shapeshifting or levitation capabilities and is NOT biologically 'undead.' The primary threat is the subject's ability to easily blend into the population and rapidly create new vectors through fluid exchange (infection).</p>
 
-    <section id="government-lore">
-        <!-- Government lore content -->
-    </section>
+            <div class="monster-section-header">Threat Assessment</div>
+            <div class="monster-stats">
+                <span class="stat-label">Designation:</span> <span class="stat-value">SANGUINE INFILTRATOR</span>
+                <span class="stat-label">Harm Rating:</span> <span class="stat-value">8 (Exsanguination/Psychological)</span>
+                <span class="stat-label">Vulnerability:</span> <span class="stat-value">Aconite Fumes (Garlic), Blood Deprivation (14 days)</span>
+                <span class="stat-label">Vector:</span> <span class="stat-value">Saliva/Blood exchange (Infection Rate: HIGH)</span>
+                <span class="stat-label">Cure Status:</span> <span class="stat-value">NO FULL CURE. Soft-cure available to prevent further transmission.</span>
+            </div>
 
-    <section id="monster-lore">
-        <h3>A</h3>
-...<br></p>
-<h3>B</h3>
-<p>Basilisk<br>
-Bunyip<br></p>
-<h3>C</h3>
-<p>Changeling<br></p>
-<h3>D</h3>
-<p>Devil<br>
-Dokkaebi<br>
-Dragon<br>
-Dullahan<br></p>
-<h3>E</h3>
-<p>...<br></p>
-<h3>F</h3>
-<p>...<br></p>
-<h3>G</h3>
-<p>Gumiho<br></p>
-<h3>H</h3>
-<p>Hippogriff<br></p>
-<h3>I</h3>
-<p>...<br></p>
-<h3>J</h3>
-<p>Jiangshi<br></p>
-<h3>K</h3>
-<p>Kelpie<br>
-Kitsune<br></p>
-<h3>L</h3>
-<p>...<br></p>
-<h3>M</h3>
-<p>Manticore<br>
-Moth man<br></p>
-<h3>N</h3>
-<p>Nukebuki<br></p>
-<h3>O</h3>
-<p>...<br></p>
-<h3>P</h3>
-<p>Puaka Pig<br></p>
-<h3>Q</h3>
-<h3>R</h3>
-<h3>S</h3>
-<p>Selkie<br>
-Siren<br>
-Skinwalkier<br>
-Squonk<br></p>
-<h3>T</h3>
-<p>Tiger Slave<br></p>
-<h3>U</h3>
-<h3>V</h3>
-<p><a href= "vampire.html">Vampire</a><br></p>
-<h3>W</h3>
-<p>Wendigo<br>
-Werewolf<br></p>
-<h3>X</h3>
-<h3>Y</h3>
-<h3>Z</h3>
-Zombie(basic) <br>
-</p>
-    </section>
+            <div class="monster-section-header">Recorded Movements (Abilities)</div>
+            <ul class="monster-abilities">
+                <li><strong>MENTAL DOMINION:</strong> Subject can assert subtle mental influence over low-willpower humans, used for social manipulation or momentary distraction.</li>
+                <li><strong>NOCTURNAL ACUITY:</strong> Excellent low-light vision. Subject's retinas reflect light (cat-like glowing eyes) when exposed to dim illumination.</li>
+                <li><strong>OLFACTORY TRIGGER:</strong> The presence of open blood causes an immediate, aggressive feeding response, bypassing human rationale.</li>
+                <li><strong>BIOLOGICAL IMPULSE:</strong> Subject experiences extreme mental instability and aggression after 7 days without consuming blood.</li>
+            </ul>
 
-    <footer>
-        <!-- Footer content -->
-    </footer>
+            <div class="monster-section-header">Protocol & Countermeasures</div>
+            <ul class="monster-weaknesses">
+                <li>**PROTOCOL 4-D:** Standard lethal force is authorized. The subject can be neutralized by any means capable of killing a human being.</li>
+                <li>**COUNTERMEASURE:** Exposure to aerosolized Aconite (Garlic) fumes causes intense spasms and uncontrollable aggression, potentially incapacitating the subject briefly.</li>
+                <li>**HANDLING WARNING:** Fangs are continuously growing and highly durable. DO NOT attempt close-quarters capture without proper neck/limb protection. Reasoning is not recommended; the subject is highly opportunistic.</li>
+            </ul>
 
+            <div class="monster-notes">
+                <div class="monster-section-header">FIELD LOG (INVESTIGATOR NOTES)</div>
+                <textarea rows="4" placeholder="[2003-03-25]: Interrogation of suspected V-98C carrier confirmed inability to consume solid foods. Suspect had been using blood purchased from a local clinic; primary targets are rarely killed, indicating a focus on long-term supply/secrecy. Soft-cure administered."></textarea>
+            </div>
+        </div>
+        <!-- END ENTITY DOSSIER 1: VAMPIRE -->
+
+        <!-- ENTITY DOSSIER 2: WEREWOLF (LYCANTHROPIC AGENT) -->
+        <div class="monster-card" data-name="ENTITY ID: L-02A - WEREWOLF">
+            <h2 class="monster-name">ENTITY ID: L-02A (WEREWOLF)</h2>
+            <div class="monster-tagline">CLASSIFICATION: BIOLOGICAL HAZARD - TERMINATE ON SIGHT</div>
+
+            <div class="monster-section-header">Description / Profile (LYCANTHROPIC AGENT)</div>
+            <p class="monster-description">Subject is an individual infected with a highly mutated, Rabies-like pathogen believed to originate from a non-native wolf strain. This infection causes irreversible physical and neurological changes, resulting in cyclical, aggressive transformations. The phase of the moon has no correlation with the transformation cycle. Subjects generally operate independently and avoid congregation. NOTE: Transformation forms are highly variable, ranging from hyper-muscled humanoids to large, almost pure-canine predators. Subjects exhibit profound retrograde amnesia post-shift.</p>
+
+            <div class="monster-section-header">Threat Assessment</div>
+            <div class="monster-stats">
+                <span class="stat-label">Designation:</span> <span class="stat-value">LYCANTHROPIC AGENT</span>
+                <span class="stat-label">Harm Rating:</span> <span class="stat-value">10+ (Unstable/Rending)</span>
+                <span class="stat-label">Transformation Cycle:</span> <span class="stat-value">Predictable Shift every 96 hours (4 Days)</span>
+                <span class="stat-label">Reported Vector:</span> <span class="stat-value">Infection through deep bite or fluid exchange.</span>
+                <span class="stat-label">Status:</span> <span class="stat-value">NO KNOWN CURE. Changes are irreversible.</span>
+            </div>
+
+            <div class="monster-section-header">Transformation Triggers & Abilities</div>
+            <ul class="monster-abilities">
+                <li><strong>BIOLOGICAL IMPULSE:</strong> Transformation is automatically triggered 96 hours post-last shift.</li>
+                <li><strong>ACCELERATED SHIFT:</strong> Transformation can be triggered early by extreme physiological stress (e.g., severe injury, adrenaline spike, or intense fear).</li>
+                <li><strong>SUPPRESSED MEMORY:</strong> Subject has no conscious memory of activities during the transformed state.</li>
+                <li><strong>PATHOGENIC RESISTANCE:</strong> Subject is highly resistant to non-silver, non-magical blunt force trauma.</li>
+            </ul>
+
+            <div class="monster-section-header">Protocol & Countermeasures</div>
+            <ul class="monster-weaknesses">
+                <li>**PROTOCOL 3-C (SEEK & DESTROY):** Containment is not recommended. Engagement must prioritize rapid neutralization.</li>
+                <li>**COUNTERMEASURE:** Weaponry must utilize pure silver components for maximum biological trauma. Standard ammunition is ineffective for immediate cessation.</li>
+                <li>**HANDLING WARNING:** DO NOT attempt verbal de-escalation or appeal to the human personality during a transformation or shift cycle. Aggression is mandatory and non-negotiable.</li>
+            </ul>
+
+            <div class="monster-notes">
+                <div class="monster-section-header">FIELD LOG (INVESTIGATOR NOTES)</div>
+                <textarea rows="4" placeholder="[2003-01-18]: Subject L-02A successfully tracked via internal calendar (Shift: 01/22). Attempted pre-emptive tranquilization was unsuccessful. Subject entered a partial-shift state due to capture stress. Lost asset during engagement. Recommend: increase silver saturation in all defensive gear."></textarea>
+            </div>
+        </div>
+        <!-- END ENTITY DOSSIER 2: WEREWOLF -->
+
+    </main>
+
+    <!-- JAVASCRIPT FOR SEARCH AND NOTES PERSISTENCE -->
     <script>
-        function showSection(sectionId) {
-            // Hide all sections
-            document.querySelectorAll('section').forEach(section => {
-                section.style.display = 'none';
-            });
+        function filterMonsters() {
+            let input = document.getElementById('searchInput');
+            let filter = input.value.toLowerCase();
+            let container = document.getElementById('monsterContainer');
+            let cards = container.getElementsByClassName('monster-card');
 
-            // Show the selected section
-            document.getElementById(sectionId).style.display = 'block';
+            for (let i = 0; i < cards.length; i++) {
+                // Search based on the 'data-name' attribute (e.g., "ENTITY ID: L-02A - WEREWOLF")
+                let name = cards[i].getAttribute('data-name');
+                
+                if (name && name.toLowerCase().indexOf(filter) > -1) {
+                    cards[i].classList.remove('hidden');
+                } else {
+                    cards[i].classList.add('hidden');
+                }
+            }
         }
+
+        // Keeper Notes Persistence (using Local Storage)
+        function saveNotes() {
+            const textareas = document.querySelectorAll('.monster-card textarea');
+            textareas.forEach((textarea, index) => {
+                // Using a unique, agency-style key for local storage persistence
+                const key = `PROJECT-CHIMERA-LOG-${index}`; 
+                localStorage.setItem(key, textarea.value);
+            });
+        }
+
+        function loadNotes() {
+            const textareas = document.querySelectorAll('.monster-card textarea');
+            textareas.forEach((textarea, index) => {
+                const key = `PROJECT-CHIMERA-LOG-${index}`;
+                const savedNote = localStorage.getItem(key);
+                if (savedNote) {
+                    textarea.value = savedNote;
+                }
+            });
+            // Add event listeners to save notes automatically on input change
+            textareas.forEach(textarea => {
+                textarea.addEventListener('input', saveNotes);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadNotes);
     </script>
 </body>
-
 </html>

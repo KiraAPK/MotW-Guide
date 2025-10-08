@@ -122,8 +122,9 @@
         /* Stats Section */
         .monster-stats {
             display: grid;
-            /* Default: Label | Value */
-            grid-template-columns: auto 1fr;
+            /* FIX: Use minmax to ensure the label column takes only the minimum space needed 
+                   but no more than 33%, dedicating the remaining 1fr to the potentially long value. */
+            grid-template-columns: minmax(min-content, 33%) 1fr;
             gap: 8px 15px;
             padding: 10px;
             border: 1px solid #404040;
@@ -186,22 +187,7 @@
 
         /* --- RESPONSIVE ADJUSTMENTS --- */
         
-        /* 1. Stack stats section on narrower views (to fix wrapping inside constrained cards) */
-        @media (max-width: 650px) {
-            .monster-stats {
-                /* Force the stats to stack vertically for better readability when card is narrow */
-                grid-template-columns: 1fr; 
-                gap: 5px 0;
-                padding: 15px;
-            }
-            .stat-label {
-                color: var(--accent-color); /* Highlight the label when stacked */
-                margin-top: 5px;
-                font-size: 0.9em;
-            }
-        }
-
-        /* 2. Standard Mobile/Tablet Adjustments (when the layout switches to a single column) */
+        /* Standard Mobile/Tablet Adjustments (when the layout switches to a single column) */
         @media (max-width: 768px) {
             .campaign-header h1 {
                 font-size: 1.8em;
@@ -215,6 +201,18 @@
 
             .monster-card {
                 padding: 20px;
+            }
+            
+            /* Force the stats to stack vertically when the viewport gets narrow (i.e., on phones/tablets) */
+            .monster-stats {
+                grid-template-columns: 1fr; 
+                gap: 5px 0;
+                padding: 15px;
+            }
+            .stat-label {
+                color: var(--accent-color); /* Highlight the label when stacked */
+                margin-top: 5px;
+                font-size: 0.9em;
             }
         }
     </style>
@@ -565,7 +563,7 @@
             <div class="monster-stats">
                 <span class="stat-label">Designation:</span> <span class="stat-value">OCEANIC COLLOSSUS</span>
                 <span class="stat-label">Harm Rating:</span> <span class="stat-value">10 (Environmental/Structural Collapse)</span>
-                <span class="stat-label">Vulnerability:</span> <span class="stat-value">Rapid Depressurization (Surface), High-Frequency Acoustic Shockwaves, Internal Organ Trauma</span>
+                <span class="stat-value">Vulnerability:</span> <span class="stat-value">Rapid Depressurization (Surface), High-Frequency Acoustic Shockwaves, Internal Organ Trauma</span>
                 <span class="stat-label">Reported Sector:</span> <span class="stat-value">Abyssal Plains / Mid-Ocean Trenches</span>
             </div>
 

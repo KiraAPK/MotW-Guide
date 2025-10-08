@@ -72,6 +72,7 @@
         /* Monster Container */
         .monster-container {
             display: grid;
+            /* Ensures a minimum card width of 350px before wrapping */
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 40px;
             padding: 30px;
@@ -121,6 +122,7 @@
         /* Stats Section */
         .monster-stats {
             display: grid;
+            /* Default: Label | Value */
             grid-template-columns: auto 1fr;
             gap: 8px 15px;
             padding: 10px;
@@ -182,7 +184,24 @@
             display: none;
         }
 
-        /* Responsive Adjustments */
+        /* --- RESPONSIVE ADJUSTMENTS --- */
+        
+        /* 1. Stack stats section on narrower views (to fix wrapping inside constrained cards) */
+        @media (max-width: 650px) {
+            .monster-stats {
+                /* Force the stats to stack vertically for better readability when card is narrow */
+                grid-template-columns: 1fr; 
+                gap: 5px 0;
+                padding: 15px;
+            }
+            .stat-label {
+                color: var(--accent-color); /* Highlight the label when stacked */
+                margin-top: 5px;
+                font-size: 0.9em;
+            }
+        }
+
+        /* 2. Standard Mobile/Tablet Adjustments (when the layout switches to a single column) */
         @media (max-width: 768px) {
             .campaign-header h1 {
                 font-size: 1.8em;
@@ -191,6 +210,7 @@
             .monster-container {
                 grid-template-columns: 1fr;
                 padding: 10px;
+                gap: 20px;
             }
 
             .monster-card {
@@ -539,7 +559,6 @@
             <div class="monster-tagline">CLASSIFICATION: DEEP-SEA ORGANISM (Giant Cephalopod)</div>
 
             <div class="monster-section-header">Description / Profile</div>
-            <!-- FIX: Replaced *Architeuthis dux* with <i>Architeuthis dux</i> for correct italics rendering -->
             <p class="monster-description">An extreme mutation of the Giant Squid (<i>Architeuthis dux</i>), exhibiting <strong>hyper-gigantism</strong> due to chronic exposure to deep-sea geothermal vents and pressure adaptation. Its massive size (observed up to 50m in length) makes it an apex predator that targets large cetaceans and deep-sea vessels. It only rises to shallower waters during breeding cycles.</p>
 
             <div class="monster-section-header">Threat Assessment</div>
@@ -690,7 +709,5 @@
 
         document.addEventListener('DOMContentLoaded', loadNotes);
     </script>
-</body>
-</html>
 </body>
 </html>

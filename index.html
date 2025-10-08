@@ -119,14 +119,13 @@
             border-left: 4px solid var(--accent-color);
         }
 
-        /* Stats Section */
+        /* Stats Section - DEFAULT (Mobile/Constrained View) */
         .monster-stats {
             display: grid;
-            /* FIX: Use minmax to ensure the label column takes only the minimum space needed 
-                   but no more than 33%, dedicating the remaining 1fr to the potentially long value. */
-            grid-template-columns: minmax(min-content, 33%) 1fr;
-            gap: 8px 15px;
-            padding: 10px;
+            /* Default: Always stack in a single column for maximum readability */
+            grid-template-columns: 1fr; 
+            gap: 5px 0;
+            padding: 15px;
             border: 1px solid #404040;
             border-radius: var(--border-radius);
             background-color: #242424;
@@ -134,12 +133,16 @@
 
         .stat-label {
             font-weight: bold;
-            color: #b0b0b0;
+            color: var(--accent-color); /* Highlight the label when stacked */
+            margin-top: 5px;
+            font-size: 0.9em;
             text-transform: uppercase;
         }
 
         .stat-value {
             color: var(--text-color);
+            /* Reset the top margin if it came from the default mobile styling */
+            margin-top: 0; 
         }
 
         /* Abilities and Weaknesses Lists */
@@ -187,7 +190,17 @@
 
         /* --- RESPONSIVE ADJUSTMENTS --- */
         
-        /* Standard Mobile/Tablet Adjustments (when the layout switches to a single column) */
+        /* The media query below now targets WIDE screens where we can actually afford
+           the two-column stat layout without breaking the text. Since your 1920px screen 
+           breaks the text when 4 columns are displayed, we are disabling the two-column 
+           stat layout entirely, letting it stack instead (1fr default). 
+           
+           I am removing the original two-column stat grid entirely and leaving it stacked. 
+           If the user wants a two-column grid inside the card, we must ensure the card is WIDE enough, 
+           which is not guaranteed when the card itself is inside a multi-column grid. */
+
+
+        /* Small devices: Ensure the main container is flexible */
         @media (max-width: 768px) {
             .campaign-header h1 {
                 font-size: 1.8em;
@@ -201,18 +214,6 @@
 
             .monster-card {
                 padding: 20px;
-            }
-            
-            /* Force the stats to stack vertically when the viewport gets narrow (i.e., on phones/tablets) */
-            .monster-stats {
-                grid-template-columns: 1fr; 
-                gap: 5px 0;
-                padding: 15px;
-            }
-            .stat-label {
-                color: var(--accent-color); /* Highlight the label when stacked */
-                margin-top: 5px;
-                font-size: 0.9em;
             }
         }
     </style>
@@ -311,7 +312,7 @@
             <div class="monster-stats">
                 <span class="stat-label">Designation:</span> <span class="stat-value">PETRIFYING HOST</span>
                 <span class="stat-label">Harm Rating:</span> <span class="stat-value">9 (Irreversible Biological Damage - Direct)</span>
-                <span class="stat-label">Vulnerability:</span> <span class="stat-value">Ocular Occlusion (Blindfold), Light Deprivation, Loud, Distracting Noise</span>
+                <span class="stat-label">Vulnerability:</span> <span class="stat-value">Ocular Occlusion (Blindfold), Light Deprivation, Loud, Distracting Noise)</span>
                 <span class="stat-label">Reported Sector:</span> <span class="stat-value">Highly Isolated Communities / Deep Forests</span>
             </div>
 
@@ -455,7 +456,7 @@
             <div class="monster-stats">
                 <span class="stat-label">Designation:</span> <span class="stat-value">AIR PREDATOR</span>
                 <span class="stat-label">Harm Rating:</span> <span class="stat-value">9 (Aerial/Blunt Force Trauma)</span>
-                <span class="stat-label">Vulnerability:</span> <span class="stat-value">High-Voltage Shock, Extreme Altitude Pressure Differential, Wing Joint Trauma</span>
+                <span class="stat-label">Vulnerability:</span> <span class="stat-value">High-Voltage Shock, Extreme Altitude Pressure Differential, Wing Joint Trauma)</span>
                 <span class="stat-label">Reported Sector:</span> <span class="stat-value">High Peaks / Mountainous Terrain / Remote Air Corridors</span>
             </div>
 
@@ -563,7 +564,7 @@
             <div class="monster-stats">
                 <span class="stat-label">Designation:</span> <span class="stat-value">OCEANIC COLLOSSUS</span>
                 <span class="stat-label">Harm Rating:</span> <span class="stat-value">10 (Environmental/Structural Collapse)</span>
-                <span class="stat-value">Vulnerability:</span> <span class="stat-value">Rapid Depressurization (Surface), High-Frequency Acoustic Shockwaves, Internal Organ Trauma</span>
+                <span class="stat-label">Vulnerability:</span> <span class="stat-value">Rapid Depressurization (Surface), High-Frequency Acoustic Shockwaves, Internal Organ Trauma</span>
                 <span class="stat-label">Reported Sector:</span> <span class="stat-value">Abyssal Plains / Mid-Ocean Trenches</span>
             </div>
 

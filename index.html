@@ -37,7 +37,7 @@
             margin-bottom: 30px;
             box-shadow: var(--box-shadow);
         }
-
+        
         .campaign-header h1 {
             color: var(--accent-color);
             margin-top: 0;
@@ -68,11 +68,30 @@
             font-size: 1em;
             text-transform: uppercase;
         }
+        
+        .briefing-section {
+            max-width: 1200px;
+            margin: 0 auto 40px auto;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-left: 5px solid var(--accent-color);
+            box-shadow: var(--box-shadow);
+        }
+
+        .briefing-section h2 {
+            color: var(--header-color);
+            text-transform: uppercase;
+            margin-top: 0;
+        }
+
+        .briefing-section p {
+            color: #d0d0d0;
+            margin-bottom: 0;
+        }
 
         /* Monster Container */
         .monster-container {
             display: grid;
-            /* Ensures a minimum card width of 350px before wrapping */
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 40px;
             padding: 30px;
@@ -87,6 +106,8 @@
             border-radius: var(--border-radius);
             box-shadow: 0 0 15px rgba(204, 0, 0, 0.2);
             border: 1px solid #404040;
+            display: flex;
+            flex-direction: column;
         }
 
         .monster-name {
@@ -119,10 +140,8 @@
             border-left: 4px solid var(--accent-color);
         }
 
-        /* Stats Section - DEFAULT (Mobile/Constrained View) */
         .monster-stats {
             display: grid;
-            /* Default: Always stack in a single column for maximum readability */
             grid-template-columns: 1fr; 
             gap: 5px 0;
             padding: 15px;
@@ -133,7 +152,7 @@
 
         .stat-label {
             font-weight: bold;
-            color: var(--accent-color); /* Highlight the label when stacked */
+            color: var(--accent-color);
             margin-top: 5px;
             font-size: 0.9em;
             text-transform: uppercase;
@@ -141,12 +160,10 @@
 
         .stat-value {
             color: var(--text-color);
-            /* Reset the top margin if it came from the default mobile styling */
             margin-top: 0; 
         }
 
-        /* Abilities and Weaknesses Lists */
-        .monster-abilities, .monster-weaknesses {
+        .monster-abilities, .monster-weaknesses, .monster-hooks {
             list-style-type: none;
             padding-left: 0;
             border: 1px dashed #3a3a3a;
@@ -154,13 +171,18 @@
             border-radius: var(--border-radius);
         }
 
-        .monster-abilities li, .monster-weaknesses li {
+        .monster-abilities li, .monster-weaknesses li, .monster-hooks li {
             padding: 5px 0;
             margin-bottom: 4px;
             border-bottom: 1px dotted #3a3a3a;
         }
+        
+        .monster-hooks li {
+            font-style: italic;
+            color: #b0b0b0;
+        }
 
-        .monster-abilities li:last-child, .monster-weaknesses li:last-child {
+        .monster-abilities li:last-child, .monster-weaknesses li:last-child, .monster-hooks li:last-child {
             border-bottom: none;
         }
 
@@ -168,8 +190,11 @@
             color: var(--header-color);
             text-transform: uppercase;
         }
+        
+        .monster-notes {
+            margin-top: auto; /* Pushes notes to the bottom */
+        }
 
-        /* Keeper Notes (Official Memo/Log Feel) */
         .monster-notes textarea {
             width: 100%;
             box-sizing: border-box; 
@@ -183,24 +208,10 @@
             font-family: 'Courier New', monospace;
         }
 
-        /* Hide card when filtered by search */
         .monster-card.hidden {
             display: none;
         }
 
-        /* --- RESPONSIVE ADJUSTMENTS --- */
-        
-        /* The media query below now targets WIDE screens where we can actually afford
-           the two-column stat layout without breaking the text. Since your 1920px screen 
-           breaks the text when 4 columns are displayed, we are disabling the two-column 
-           stat layout entirely, letting it stack instead (1fr default). 
-           
-           I am removing the original two-column stat grid entirely and leaving it stacked. 
-           If the user wants a two-column grid inside the card, we must ensure the card is WIDE enough, 
-           which is not guaranteed when the card itself is inside a multi-column grid. */
-
-
-        /* Small devices: Ensure the main container is flexible */
         @media (max-width: 768px) {
             .campaign-header h1 {
                 font-size: 1.8em;
@@ -226,15 +237,18 @@
         <input type="text" id="searchInput" placeholder="SEARCH ENTITY ID / CLASSIFICATION..." onkeyup="filterMonsters()">
     </header>
 
+    <section class="briefing-section">
+        <h2>OPERATIONAL BRIEFING: OUTPOST 37 (HAVENWOOD)</h2>
+        <p><strong>DATE:</strong> 2008 // <strong>LOCATION:</strong> Havenwood, CO (Pop. 8,500), adjacent to the Rocky Mountain National Park. This region is designated a high-priority "Veil" zone due to its unique geophysical properties and high incidence of anomalous biological entities (ABEs). Your primary objective is to investigate, document, and contain any ABE threats to public safety and Project secrecy. Maintain low-profile, non-official cover at all times. All entity data is considered classified.</p>
+    </section>
+
     <main id="monsterContainer" class="monster-container">
         <!-- ENTITY 1: LYCANTHROPIC AGENT (WEREWOLF) -->
         <div class="monster-card" data-name="ENTITY ID: L-02A Lycanthropic Agent Werewolf">
             <h2 class="monster-name">ENTITY ID: L-02A (WEREWOLF)</h2>
             <div class="monster-tagline">CLASSIFICATION: LYCANTHROPIC AGENT (WEREWOLF)</div>
-
             <div class="monster-section-header">Description / Profile</div>
             <p class="monster-description">Subject is a human infected with a heavily mutated strain of canine pathogen, hypothesized to be an ancient, stable variant of the Rabies virus. The infection causes irreversible cellular restructuring during cyclical transformation, which occurs <strong>every four (4) days</strong>. Contrary to folklore, transformation is NOT moon-dependent.</p>
-
             <div class="monster-section-header">Threat Assessment</div>
             <div class="monster-stats">
                 <span class="stat-label">Designation:</span> <span class="stat-value">LUPINE HOST</span>
@@ -242,21 +256,23 @@
                 <span class="stat-label">Vulnerability:</span> <span class="stat-value">Specialized Pathogen Dispersal, Physical Trauma (Decapitation, Massive Organ Failure)</span>
                 <span class="stat-label">Reported Sector:</span> <span class="stat-value">Wilderness Borders / Isolated Properties</span>
             </div>
-
             <div class="monster-section-header">Recorded Movements (Abilities)</div>
             <ul class="monster-abilities">
                 <li><strong>PATHOGENESIS:</strong> Infection is transmitted via direct fluid exchange (bites/scratches). Highly aggressive, but aggression levels vary post-transformation.</li>
                 <li><strong>TRANSFORMATION (CYCLICAL):</strong> Occurs every 96 hours post-infection. Form varies from large humanoids to full-wolf forms. Subject retains little to no memory of the shift.</li>
                 <li><strong>RESILIENCE:</strong> Standard firearms are largely ineffective. Silver-based weaponry is a traditional countermeasure but is currently unverified by R&D.</li>
             </ul>
-
             <div class="monster-section-header">Protocol & Countermeasures</div>
             <ul class="monster-weaknesses">
                 <li><strong>PROTOCOL 7-B:</strong> <strong>DO NOT</strong> attempt verbal communication or emotional de-escalation; the subject is neurologically compromised.</li>
                 <li><strong>COUNTERMEASURE:</strong> Lethal force is authorized. Prioritize non-contact neutralization via high-velocity rounds or explosive trauma.</li>
                 <li><strong>TREATMENT:</strong> No known cure for the irreversible cellular changes. <strong>Containment is the only option.</strong></li>
             </ul>
-
+            <div class="monster-section-header">Plot Hooks & Mission Briefs</div>
+            <ul class="monster-hooks">
+                <li>A local hiker went missing near an old, abandoned mill. Their body was found with signs of a severe animal attack, but forensics are inconclusive.</li>
+                <li>Reports of a large, unidentified animal are coming from a remote farmstead. The farmer claims it's been stealing livestock every few nights, like clockwork.</li>
+            </ul>
             <div class="monster-notes">
                 <div class="monster-section-header">FIELD LOG (INVESTIGATOR NOTES)</div>
                 <textarea rows="4" placeholder="[DATE]: New report filed. Suspect activity noted near the old mill, coinciding with the 4-day L-02A cycle. Recommend two-person team."></textarea>
@@ -267,10 +283,8 @@
         <div class="monster-card" data-name="ENTITY ID: S-11B Sanguine Infiltrator Vampire">
             <h2 class="monster-name">ENTITY ID: S-11B (VAMPIRE)</h2>
             <div class="monster-tagline">CLASSIFICATION: SANGUINE INFILTRATOR (VAMPIRE)</div>
-
             <div class="monster-section-header">Description / Profile</div>
             <p class="monster-description">Humanoid entity that is biologically alive but requires consistent ingestion of human blood for metabolic function. Cannot consume solid foods. Displays no aging or signs of common disease. Often mistaken for other non-pathological criminals, allowing for widespread population dispersal.</p>
-
             <div class="monster-section-header">Threat Assessment</div>
             <div class="monster-stats">
                 <span class="stat-label">Designation:</span> <span class="stat-value">BLOOD HOST</span>
@@ -278,7 +292,6 @@
                 <span class="stat-label">Vulnerability:</span> <span class="stat-value">Blood Deprivation (2 Weeks max), Garlic Fumes, Standard Trauma</span>
                 <span class="stat-label">Reported Sector:</span> <span class="stat-value">Urban Centers / High Population Density</span>
             </div>
-
             <div class="monster-section-header">Recorded Movements (Abilities)</div>
             <ul class="monster-abilities">
                 <li><strong>HAEMATOPHAGIA:</strong> Requires blood intake every 7-14 days. Deprivation leads to extreme instability and aggression after 7 days.</li>
@@ -286,14 +299,17 @@
                 <li><strong>ENHANCED SENSES:</strong> Exceptional night vision (eyes glow in low light) and superior olfactory detection (can track blood scent over long distances).</li>
                 <li><strong>INOCULATION:</strong> Can infect others via fluid exchange. A 'soft-cure' exists to prevent further infection, but the host changes are irreversible.</li>
             </ul>
-
             <div class="monster-section-header">Protocol & Countermeasures</div>
             <ul class="monster-weaknesses">
                 <li><strong>PROTOCOL 1-A:</strong> Lethal force is authorized, but the subject can be killed by <strong>any means that would kill a normal human.</strong> Target central nervous system.</li>
                 <li><strong>COUNTERMEASURE:</strong> Garlic extract dispersed as a fine mist causes uncontrollable spasms and aggression, disrupting Mental Dominion.</li>
                 <li><strong>R&D NOTE:</strong> Fangs are highly durable and continuously grow if not naturally worn down by host activities.</li>
             </ul>
-
+             <div class="monster-section-header">Plot Hooks & Mission Briefs</div>
+            <ul class="monster-hooks">
+                <li>A string of "missing persons" cases has emerged from the city's nightlife district. Victims are discovered days later, disoriented and anemic, with no memory of the event.</li>
+                <li>A charismatic new figure has quickly risen to prominence in local politics, charming everyone they meet. An anonymous tip suggests they're never seen in daylight.</li>
+            </ul>
             <div class="monster-notes">
                 <div class="monster-section-header">FIELD LOG (INVESTIGATOR NOTES)</div>
                 <textarea rows="4" placeholder="[DATE]: S-11B feeding patterns indicate an opportunistic predator. Not recommended to engage in dialogue; treat all interactions as a lethal encounter."></textarea>
@@ -304,10 +320,8 @@
         <div class="monster-card" data-name="ENTITY ID: CH-41E Chimeric Observer Gorgon">
             <h2 class="monster-name">ENTITY ID: CH-41E (GORGON)</h2>
             <div class="monster-tagline">CLASSIFICATION: CHIMERIC OBSERVER (GORGON)</div>
-
             <div class="monster-section-header">Description / Profile</div>
             <p class="monster-description">Extremely rare biogenic entity. The 'Gorgon' phenotype results from a specific, complex genetic pairing, with <strong>purebloods being nearly nonexistent</strong>. Most encounters involve hybrids who resemble humans but retain the ocular and epidermal traits.</p>
-
             <div class="monster-section-header">Threat Assessment</div>
             <div class="monster-stats">
                 <span class="stat-label">Designation:</span> <span class="stat-value">PETRIFYING HOST</span>
@@ -315,21 +329,23 @@
                 <span class="stat-label">Vulnerability:</span> <span class="stat-value">Ocular Occlusion (Blindfold), Light Deprivation, Loud, Distracting Noise)</span>
                 <span class="stat-label">Reported Sector:</span> <span class="stat-value">Highly Isolated Communities / Deep Forests</span>
             </div>
-
             <div class="monster-section-header">Recorded Movements (Abilities)</div>
             <ul class="monster-abilities">
                 <li><strong>GAZE TRIGGER:</strong> The primary threat. Direct, sustained eye contact triggers an immediate, rapid onset of <strong>cellular mineralization</strong>, turning living tissue to stone.</li>
                 <li><strong>OCULAR CONTROL:</strong> If trained from youth, the subject can learn to control the output of the gaze, allowing for normal interaction. Untrained or stressed subjects pose an extreme risk.</li>
                 <li><strong>HYBRID TRAITS:</strong> Hybrids may only petrify certain materials or may have a delayed onset, making them harder to detect but slightly less lethal.</li>
             </ul>
-
             <div class="monster-section-header">Protocol & Countermeasures</div>
             <ul class="monster-weaknesses">
                 <li><strong>PROTOCOL 9-G:</strong> <strong>ABSOLUTELY NECESSARY:</strong> Ocular occlusion (thick, padded blindfold) for containment or transport. Even trained subjects are unstable under duress.</li>
                 <li><strong>COUNTERMEASURE:</strong> Use reflective surfaces (mirrors) to monitor location without direct sight. Engage only with full-face shields.</li>
                 <li><strong>OBSERVATION NOTES:</strong> The petrifying mechanism is hypothesized to be a highly complex, genetically driven biological defense mechanism, not a mystical effect.</li>
             </ul>
-
+             <div class="monster-section-header">Plot Hooks & Mission Briefs</div>
+            <ul class="monster-hooks">
+                <li>A local sculptor known for hyper-realistic statues has vanished. Authorities found several new "works" in their studio, all depicting expressions of pure terror.</li>
+                <li>Park rangers have found several petrified animals (deer, bears) deep within the national park. The phenomenon seems to be spreading.</li>
+            </ul>
             <div class="monster-notes">
                 <div class="monster-section-header">FIELD LOG (INVESTIGATOR NOTES)</div>
                 <textarea rows="4" placeholder="[DATE]: Subject CH-41E secured using non-reflective opaque bag over the head. Transported under full seismic dampening to limit distress."></textarea>
@@ -659,7 +675,402 @@
                 <textarea rows="4" placeholder="[DATE]: Subject NCE-12A neutralized two automated drones with a single pulse. Switched to manual capture team using ceramic-plated shielding."></textarea>
             </div>
         </div>
+
+        <!-- ENTITY 13: CANNIBALISTIC FORM-EVOLVING PATHOGEN (WENDIGO) -->
+        <div class="monster-card" data-name="ENTITY ID: CFE-03 Cannibalistic Form-Evolving Pathogen Wendigo">
+            <h2 class="monster-name">ENTITY ID: CFE-03 (WENDIGO)</h2>
+            <div class="monster-tagline">CLASSIFICATION: CANNIBALISTIC FORM-EVOLVING PATHOGEN</div>
+            <div class="monster-section-header">Description / Profile</div>
+            <p class="monster-description">Human host infected by an airborne prion (CFE Prion) found in decaying ungulate carcasses in sub-zero temperatures. The pathogen attacks the limbic system and hypothalamus, causing extreme psychological degradation, physical emaciation, cellular regeneration failure, and an insatiable, neurologically-driven hunger for human flesh to replace its own failing cells.</p>
+            <div class="monster-section-header">Threat Assessment</div>
+            <div class="monster-stats">
+                <span class="stat-label">Designation:</span> <span class="stat-value">INSATIABLE HOST</span>
+                <span class="stat-label">Harm Rating:</span> <span class="stat-value">9 (Psychological/Physical - Extreme Predation)</span>
+                <span class="stat-label">Vulnerability:</span> <span class="stat-value">Incineration (destroys prions), Cerebral Trauma, Anti-Prion Agents (experimental)</span>
+                <span class="stat-label">Reported Sector:</span> <span class="stat-value">Deep Forests / High Altitude Hunting Grounds</span>
+            </div>
+            <div class="monster-section-header">Recorded Movements (Abilities)</div>
+            <ul class="monster-abilities">
+                <li><strong>VOCAL MIMICRY:</strong> Neurological degradation allows the entity to perfectly mimic human voices it has heard, often replicating cries for help to lure prey into ambushes.</li>
+                <li><strong>HYPERMETABOLISM:</strong> Burns calories at an unsustainable rate, granting extreme speed and strength despite a gaunt appearance. This process rapidly destroys its own tissues.</li>
+                <li><strong>PREDATORY STEALTH:</strong> Capable of remaining motionless for hours, lowering its body temperature to match the ambient air, making it nearly invisible to thermal scans.</li>
+            </ul>
+            <div class="monster-section-header">Protocol & Countermeasures</div>
+            <ul class="monster-weaknesses">
+                <li><strong>PROTOCOL 9-C:</strong> Avoid all engagement during winter months if possible. Standard rounds are effective, but target must be completely destroyed by fire.</li>
+                <li><strong>COUNTERMEASURE:</strong> Incineration of host and any potential infection sites is mandatory to prevent prion spread. Disregard all human-like sounds in a confirmed CFE-03 zone.</li>
+                <li><strong>WARNING:</strong> The CFE Prion is airborne in close proximity to a host. Standard biohazard suits (Level 4) required.</li>
+            </ul>
+            <div class="monster-section-header">Plot Hooks & Mission Briefs</div>
+            <ul class="monster-hooks">
+                <li>A group of campers has gone missing in the national park after a blizzard. Their last radio call mentioned hearing someone crying for help.</li>
+                <li>A local hunter returned from the woods, rambling about a "gaunt man who moved like the wind." He's now under quarantine, showing signs of extreme paranoia and malnutrition.</li>
+            </ul>
+            <div class="monster-notes">
+                <div class="monster-section-header">FIELD LOG (INVESTIGATOR NOTES)</div>
+                <textarea rows="4" placeholder="[DATE]: The Donner Party incident is now being re-evaluated as a potential CFE-03 outbreak. Need to cross-reference historical disappearances in the region."></textarea>
+            </div>
+        </div>
+
+        <!-- ENTITY 14: RETROVIRAL MIMIC (SKINWALKER) -->
+        <div class="monster-card" data-name="ENTITY ID: RVM-01 Retroviral Mimic Skinwalker">
+            <h2 class="monster-name">ENTITY ID: RVM-01 (SKINWALKER)</h2>
+            <div class="monster-tagline">CLASSIFICATION: RETROVIRAL MIMIC</div>
+            <div class="monster-section-header">Description / Profile</div>
+            <p class="monster-description">A human who has achieved symbiosis with a unique retrovirus (RVM-01), allowing for rapid cellular deconstruction and reconstruction based on ingested genetic material. The process is imperfect and energetically costly, causing subtle but noticeable flaws in mimicry and requiring significant caloric intake post-transformation.</p>
+            <div class="monster-section-header">Threat Assessment</div>
+            <div class="monster-stats">
+                <span class="stat-label">Designation:</span> <span class="stat-value">SHAPESHIFTER</span>
+                <span class="stat-label">Harm Rating:</span> <span class="stat-value">7 (Infiltration/Assassination)</span>
+                <span class="stat-label">Vulnerability:</span> <span class="stat-value">Silver Compounds (disrupts enzymatic action), High-Intensity UV Light (causes cellular instability), Sensory Overload</span>
+                <span class="stat-label">Reported Sector:</span> <span class="stat-value">Tribal Lands / Rural Communities</span>
+            </div>
+            <div class="monster-section-header">Recorded Movements (Abilities)</div>
+            <ul class="monster-abilities">
+                <li><strong>BIOLOGICAL MIMICRY:</strong> Can replicate the form of any organism it has consumed genetic material from. Human mimicry is possible but extremely difficult, often resulting in flaws (e.g., unnatural eye color, wrong gait, disjointed speech).</li>
+                <li><strong>SENSORY ADAPTATION:</strong> Gains the acute sensory abilities of its current form (e.g., a wolf's sense of smell, an owl's night vision).</li>
+                <li><strong>PSYCHOLOGICAL WARFARE:</strong> Uses its abilities to sow discord and paranoia within isolated communities, turning neighbors against each other.</li>
+            </ul>
+            <div class="monster-section-header">Protocol & Countermeasures</div>
+            <ul class="monster-weaknesses">
+                <li><strong>PROTOCOL 7-S:</strong> All personnel must adhere to strict two-person integrity protocols in the field. Confirm identities with challenge questions known only to Project members.</li>
+                <li><strong>COUNTERMEASURE:</strong> Deploy wide-spectrum UV floodlights in suspected containment areas. Silver-laced ammunition has proven effective at inhibiting the transformation process.</li>
+                <li><strong>OBSERVATION:</strong> Subject appears to retain human intelligence in all forms, but is driven by predatory, non-human instincts. Do not assume rational behavior.</li>
+            </ul>
+            <div class="monster-section-header">Plot Hooks & Mission Briefs</div>
+            <ul class="monster-hooks">
+                <li>Livestock are being found mutilated on a local farm, but tracks of multiple different predators (coyotes, bears, mountain lions) are found, all originating from the same spot.</li>
+                <li>A local resident claims their family pet has been "acting strange" ever since it returned from a run-in with a coyote. They swear its eyes are a different color.</li>
+            </ul>
+            <div class="monster-notes">
+                <div class="monster-section-header">FIELD LOG (INVESTIGATOR NOTES)</div>
+                <textarea rows="4" placeholder="[DATE]: Subject is using mimicry to create confusion. Need to establish a baseline of normal animal behavior in the area to spot anomalies."></textarea>
+            </div>
+        </div>
         
+        <!-- ENTITY 15: AMPHIBIOUS GESTALT ENTITY (SELKIE) -->
+        <div class="monster-card" data-name="ENTITY ID: BRM-04 Amphibious Gestalt Entity Selkie">
+            <h2 class="monster-name">ENTITY ID: BRM-04 (SELKIE)</h2>
+            <div class="monster-tagline">CLASSIFICATION: AMPHIBIOUS GESTALT ENTITY</div>
+            <div class="monster-section-header">Description / Profile</div>
+            <p class="monster-description">A unique symbiosis between a phocid mammal (seal) and a colonial microorganism. The microbes form a biopolymer sheath ("skin") which can be shed, allowing the core organism to survive on land. When the host re-enters the water and dons the sheath, the microbes re-form into a hydrodynamic, humanoid shape for superior aquatic mobility. This process is often misinterpreted as transformation.</p>
+            <div class="monster-section-header">Threat Assessment</div>
+            <div class="monster-stats">
+                <span class="stat-label">Designation:</span> <span class="stat-value">SYMBIOTIC HOST</span>
+                <span class="stat-label">Harm Rating:</span> <span class="stat-value">3 (Elusive, Non-Aggressive)</span>
+                <span class="stat-label">Vulnerability:</span> <span class="stat-value">Dehydration of sheath, High Salinity Shock, Pathogenic Contamination of sheath</span>
+                <span class="stat-label">Reported Sector:</span> <span class="stat-value">Large Freshwater Lakes / Coastal Inlets</span>
+            </div>
+            <div class="monster-section-header">Recorded Movements (Abilities)</div>
+            <ul class="monster-abilities">
+                <li><strong>HYDRODYNAMIC FORM:</strong> The microbial sheath configures into an optimal form for swimming, granting incredible speed and agility underwater.</li>
+                <li><strong>EMPATHIC BROADCAST:</strong> The colony emits low-frequency waves that can induce feelings of calm or confusion in nearby humans, acting as a defense mechanism to avoid conflict.</li>
+                <li><strong>SHEATH SEPARATION:</strong> Can shed the microbial sheath to move on land in its core phocid form, appearing as a normal seal. The sheath must remain moist.</li>
+            </ul>
+            <div class="monster-section-header">Protocol & Countermeasures</div>
+            <ul class="monster-weaknesses">
+                <li><strong>PROTOCOL 3-S:</strong> Non-lethal observation is priority. Do not attempt to confiscate the sheath, as this may trigger an unpredictable defensive reaction from the colony.</li>
+                <li><strong>COUNTERMEASURE:</strong> High-concentration saline solution will destabilize the biopolymer sheath, forcing the entity to retreat.</li>
+                <li><strong>NOTE:</strong> Subject is highly intelligent and curious, but not hostile. Misinformation campaigns about local hermits are effective for maintaining secrecy.</li>
+            </ul>
+            <div class="monster-section-header">Plot Hooks & Mission Briefs</div>
+            <ul class="monster-hooks">
+                <li>A strange, leathery "skin" was found drying on the shore of Lake Havenwood. A local biologist can't identify it.</li>
+                <li>A reclusive person living by the lake seems to have an unnatural connection with the local seal population and is never seen far from the water.</li>
+            </ul>
+            <div class="monster-notes">
+                <div class="monster-section-header">FIELD LOG (INVESTIGATOR NOTES)</div>
+                <textarea rows="4" placeholder="[DATE]: Observation of BRM-04 confirms sheath-shedding cycle. Subject appears to be protecting a specific underwater cave system. Recommend sonar mapping."></textarea>
+            </div>
+        </div>
+
+        <!-- ENTITY 16: GENETICALLY ALTERED PRIMATE (MERMAID) -->
+        <div class="monster-card" data-name="ENTITY ID: HSA-01 Genetically Altered Primate Mermaid">
+            <h2 class="monster-name">ENTITY ID: HSA-01 (MERMAID)</h2>
+            <div class="monster-tagline">CLASSIFICATION: GENETICALLY ALTERED PRIMATE (AQUATIC)</div>
+            <div class="monster-section-header">Description / Profile</div>
+            <p class="monster-description">A product of illegal pre-Project Chimera genetic experiments (Codename: 'Poseidon') attempting to create aquatic humanoids. Splicing human and cetacean DNA resulted in a viable but highly territorial species with a hybrid lung/gill system. Subjects escaped containment and have established small pods in deep, isolated bodies of water.</p>
+            <div class="monster-section-header">Threat Assessment</div>
+            <div class="monster-stats">
+                <span class="stat-label">Designation:</span> <span class="stat-value">AQUATIC SAPIEN</span>
+                <span class="stat-label">Harm Rating:</span> <span class="stat-value">5 (Territorial/Defensive)</span>
+                <span class="stat-label">Vulnerability:</span> <span class="stat-value">Sonic Disruption, Water Pollutants, Surface Pathogens</span>
+                <span class="stat-label">Reported Sector:</span> <span class="stat-value">Deep Lakes / Flooded Cavern Systems</span>
+            </div>
+            <div class="monster-section-header">Recorded Movements (Abilities)</div>
+            <ul class="monster-abilities">
+                <li><strong>BIO-SONAR:</strong> Emits a wide range of vocalizations, some of which act as a disorienting sonar pulse that can disable small watercraft electronics and incapacitate divers.</li>
+                <li><strong>HIGH-PRESSURE ADAPTATION:</strong> Body is capable of withstanding extreme pressure, allowing it to inhabit depths inaccessible to standard human divers.</li>
+                <li><strong>POWERFUL PHYSIOLOGY:</strong> Muscular tail provides rapid propulsion and can be used as a formidable weapon, capable of breaching boat hulls.</li>
+            </ul>
+            <div class="monster-section-header">Protocol & Countermeasures</div>
+            <ul class="monster-weaknesses">
+                <li><strong>PROTOCOL 5-M:</strong> Avoid direct water-based engagement. Use submersible drones for observation. Area-denial via targeted sonic emitters is effective.</li>
+                <li><strong>COUNTERMEASURE:</strong> Introduction of specific non-lethal chemical agents can temporarily disable their gill function, forcing them to surface for air.</li>
+                <li><strong>NOTE:</strong> Subjects are intelligent and use tools. They have been observed building simple structures and using debris to guard their territory.</li>
+            </ul>
+            <div class="monster-section-header">Plot Hooks & Mission Briefs</div>
+            <ul class="monster-hooks">
+                <li>An underwater research drone in Lake Havenwood sent back a distorted image of a humanoid face before its systems fried and it went silent.</li>
+                <li>Fishermen report their nets being systematically torn apart by something "too smart to be a fish and too strong to be a man."</li>
+            </ul>
+            <div class="monster-notes">
+                <div class="monster-section-header">FIELD LOG (INVESTIGATOR NOTES)</div>
+                <textarea rows="4" placeholder="[DATE]: Sonar mapping confirms a small pod of HSA-01 has taken residence in the geothermal vents at the bottom of the lake. They appear to be breeding. Monitoring protocols updated."></textarea>
+            </div>
+        </div>
+
+        <!-- ENTITY 17: CANINE-AVIAN CHIMERA (CHAMROSH) -->
+        <div class="monster-card" data-name="ENTITY ID: CAC-01 Canine-Avian Chimera Chamrosh">
+            <h2 class="monster-name">ENTITY ID: CAC-01 (CHAMROSH)</h2>
+            <div class="monster-tagline">CLASSIFICATION: BIOGENETIC FLIER (HYBRID)</div>
+            <div class="monster-section-header">Description / Profile</div>
+            <p class="monster-description">A smaller, more agile bio-weapon than the Griffin (BGF-07), developed for pack-based reconnaissance and harassment. Fuses the pack-hunting instincts and olfactory senses of a wolf with the flight capabilities and vision of a large raptor. Subjects operate in packs of 3-5, led by an alpha.</p>
+            <div class="monster-section-header">Threat Assessment</div>
+            <div class="monster-stats">
+                <span class="stat-label">Designation:</span> <span class="stat-value">SKY PACK</span>
+                <span class="stat-label">Harm Rating:</span> <span class="stat-value">6 (Coordinated Threat)</span>
+                <span class="stat-label">Vulnerability:</span> <span class="stat-value">Disruption of Pack Hierarchy, High-Frequency Sonics, Ground-Based Combat</span>
+                <span class="stat-label">Reported Sector:</span> <span class="stat-value">Alpine Forests / Rocky Outcrops</span>
+            </div>
+            <div class="monster-section-header">Recorded Movements (Abilities)</div>
+            <ul class="monster-abilities">
+                <li><strong>PACK TACTICS:</strong> Utilizes coordinated aerial attacks, with some members flushing prey while others ambush from above.</li>
+                <li><strong>DIVE ATTACK:</strong> Folds wings to dive at high speed, striking with claws and beak.</li>
+                <li><strong>HYBRID SENSES:</strong> Combines canine sense of smell with avian visual acuity, making them exceptionally effective trackers.</li>
+            </ul>
+            <div class="monster-section-header">Protocol & Countermeasures</div>
+            <ul class="monster-weaknesses">
+                <li><strong>PROTOCOL 6-C:</strong> Isolate and neutralize the pack's alpha. This will often cause the remaining members to become disorganized and retreat.</li>
+                <li><strong>COUNTERMEASURE:</strong> Automated turret systems deploying high-frequency sonic bursts can disrupt their coordination and force them to scatter.</li>
+                <li><strong>NOTE:</strong> CAC-01 packs are highly territorial and will attack any perceived threat to their nesting grounds, including low-flying aircraft.</li>
+            </ul>
+            <div class="monster-section-header">Plot Hooks & Mission Briefs</div>
+            <ul class="monster-hooks">
+                <li>A remote weather station on a mountain peak has gone offline. The last transmission was a panicked report of "winged wolves" attacking the solar panels.</li>
+                <li>Hikers are being "herded" off trails by aggressive, dog-like creatures that appear from the sky before vanishing into the tree line.</li>
+            </ul>
+            <div class="monster-notes">
+                <div class="monster-section-header">FIELD LOG (INVESTIGATOR NOTES)</div>
+                <textarea rows="4" placeholder="[DATE]: Alpha of the eastern ridge pack tagged with a tracker. Their hunting grounds are dangerously close to a popular ski resort. Recommend pre-emptive relocation."></textarea>
+            </div>
+        </div>
+
+        <!-- ENTITY 18: ABERRANT UNGULATE CHIMERA (JERSEY DEVIL) -->
+        <div class="monster-card" data-name="ENTITY ID: UME-05 Aberrant Ungulate Chimera Jersey Devil">
+            <h2 class="monster-name">ENTITY ID: UME-05 (JERSEY DEVIL)</h2>
+            <div class="monster-tagline">CLASSIFICATION: ABERRANT UNGULATE CHIMERA</div>
+            <div class="monster-section-header">Description / Profile</div>
+            <p class="monster-description">An escaped specimen from early gene-splicing experiments aimed at creating resilient livestock by combining deer, goat, and chiropteran (bat) DNA. The resulting entity is a chaotic, aggressive herbivore with a deformed larynx producing a disorienting, high-pitched scream. It is highly territorial and unpredictable.</p>
+            <div class="monster-section-header">Threat Assessment</div>
+            <div class="monster-stats">
+                <span class="stat-label">Designation:</span> <span class="stat-value">SONIC AGGRESSOR</span>
+                <span class="stat-label">Harm Rating:</span> <span class="stat-value">7 (Psychological/Physical Trauma)</span>
+                <span class="stat-label">Vulnerability:</span> <span class="stat-value">Incendiaries, Enclosed Spaces (causes panic), Predictable Territorial Routes</span>
+                <span class="stat-label">Reported Sector:</span> <span class="stat-value">Dense Scrubland / Pine Forests</span>
+            </div>
+            <div class="monster-section-header">Recorded Movements (Abilities)</div>
+            <ul class="monster-abilities">
+                <li><strong>PANIC-INDUCING SCREAM:</strong> The entity's primary weapon is a piercing shriek that causes panic, disorientation, and fear in most mammals, including humans.</li>
+                <li><strong>ERRATIC FLIGHT:</strong> Possesses leathery, bat-like wings allowing for clumsy but effective short-range flight and gliding attacks.</li>
+                <li><strong>POWERFUL KICK:</strong> Retains the powerful hind legs of its ungulate origins, capable of delivering devastating kicks.</li>
+            </ul>
+            <div class="monster-section-header">Protocol & Countermeasures</div>
+            <ul class="monster-weaknesses">
+                <li><strong>PROTOCOL 7-J:</strong> Personnel must be equipped with active noise-canceling headsets. Tracking is simplified by mapping its established territorial boundaries.</li>
+                <li><strong>COUNTERMEASURE:</strong> Use of incendiary devices is effective, as the entity has a severe psychological fear of fire.</li>
+                <li><strong>NOTE:</strong> Despite its appearance, UME-05 is an herbivore. Aggression is purely territorial and not predatory.</li>
+            </ul>
+            <div class="monster-section-header">Plot Hooks & Mission Briefs</div>
+            <ul class="monster-hooks">
+                <li>A series of unsettling screams at night has the rural community on edge. Several farms have had fences and barns destroyed by an unseen force.</li>
+                <li>A hunter's trail camera captured a blurry image of a winged creature with glowing red eyes just before the camera was destroyed.</li>
+            </ul>
+            <div class="monster-notes">
+                <div class="monster-section-header">FIELD LOG (INVESTIGATOR NOTES)</div>
+                <textarea rows="4" placeholder="[DATE]: Subject's territory seems to be expanding. It follows the creek bed as a primary route. Setting up sonic tripwires to monitor its movement."></textarea>
+            </div>
+        </div>
+
+        <!-- ENTITY 19: PSYCHO-REACTIVE BIOLOGICAL ANOMALY (SQUONK) -->
+        <div class="monster-card" data-name="ENTITY ID: SCD-01 Psycho-Reactive Biological Anomaly Squonk">
+            <h2 class="monster-name">ENTITY ID: SCD-01 (SQUONK)</h2>
+            <div class="monster-tagline">CLASSIFICATION: PSYCHO-REACTIVE BIOLOGICAL ANOMALY</div>
+            <div class="monster-section-header">Description / Profile</div>
+            <p class="monster-description">A small, reclusive mammal with a unique and absolute defense mechanism. When subjected to extreme stress or fear (such as capture), a rapid enzymatic reaction is triggered, causing total cellular dissolution. The organism's entire biomass is converted into a saline fluid chemically similar to tears, leaving no trace behind except a wet patch of ground.</p>
+            <div class="monster-section-header">Threat Assessment</div>
+            <div class="monster-stats">
+                <span class="stat-label">Designation:</span> <span class="stat-value">EVANESCENT ORGANISM</span>
+                <span class="stat-label">Harm Rating:</span> <span class="stat-value">1 (Harmless)</span>
+                <span class="stat-label">Vulnerability:</span> <span class="stat-value">Capture (triggers self-destruction), Dry Environments</span>
+                <span class="stat-label">Reported Sector:</span> <span class="stat-value">Hemlock Forests / Damp Caves</span>
+            </div>
+            <div class="monster-section-header">Recorded Movements (Abilities)</div>
+            <ul class="monster-abilities">
+                <li><strong>SOMATIC LIQUIDATION:</strong> The entity's only known anomalous ability. The process is instantaneous and irreversible.</li>
+                <li><strong>MELANCHOLY FIELD:</strong> Emits a low-frequency hum that can induce mild feelings of sadness or nostalgia in nearby humans. This is believed to be a passive deterrent.</li>
+            </ul>
+            <div class="monster-section-header">Protocol & Countermeasures</div>
+            <ul class="monster-weaknesses">
+                <li><strong>PROTOCOL 1-S:</strong> Do not attempt capture. Observation only. Subject is not a threat to personnel or civilians.</li>
+                <li><strong>COUNTERMEASURE:</strong> N/A. The entity neutralizes itself more effectively than any external method could.</li>
+                <li><strong>NOTE:</strong> Due to its self-destruct mechanism, no living or dead specimen has ever been successfully recovered for study. All data is based on remote observation.</li>
+            </ul>
+            <div class="monster-section-header">Plot Hooks & Mission Briefs</div>
+            <ul class="monster-hooks">
+                <li>A group of amateur cryptozoologists are determined to capture a "crying beast" they've heard about in local folklore, threatening to expose themselves to a bizarre anomaly.</li>
+                <li>Unexplained puddles of highly salty water are appearing deep in the forest, far from any known salt deposits.</li>
+            </ul>
+            <div class="monster-notes">
+                <div class="monster-section-header">FIELD LOG (INVESTIGATOR NOTES)</div>
+                <textarea rows="4" placeholder="[DATE]: Deployed long-range audio sensors in the Hemlock forest. The melancholy hum is most active during twilight hours. Population appears stable, if impossible to count."></textarea>
+            </div>
+        </div>
+
+        <!-- ENTITY 20: BIO-MINERAL ORGANISM (GARGOYLE) -->
+        <div class="monster-card" data-name="ENTITY ID: SBA-02 Bio-Mineral Organism Gargoyle">
+            <h2 class="monster-name">ENTITY ID: SBA-02 (GARGOYLE)</h2>
+            <div class="monster-tagline">CLASSIFICATION: BIO-MINERAL ORGANISM</div>
+            <div class="monster-section-header">Description / Profile</div>
+            <p class="monster-description">A silicon-based lifeform with two distinct metabolic states. During the day, it enters a dormant phase, its crystalline cellular lattice hardening to resemble stone, during which it absorbs and stores solar/UV radiation. At night, it becomes motile, using the stored energy to function as an efficient, silent ambush predator.</p>
+            <div class="monster-section-header">Threat Assessment</div>
+            <div class="monster-stats">
+                <span class="stat-label">Designation:</span> <span class="stat-value">NOCTURNAL STATUE</span>
+                <span class="stat-label">Harm Rating:</span> <span class="stat-value">8 (Ambush Predator/Durable)</span>
+                <span class="stat-label">Vulnerability:</span> <span class="stat-value">Sustained Sonic Frequencies, Extreme Thermal Shock, UV Deprivation</span>
+                <span class="stat-label">Reported Sector:</span> <span class="stat-value">Urban Centers / Old Buildings / Mountain Cliffs</span>
+            </div>
+            <div class="monster-section-header">Recorded Movements (Abilities)</div>
+            <ul class="monster-abilities">
+                <li><strong>STONE CAMOUFLAGE:</strong> In its dormant state, it is physically and chemically indistinguishable from granite or limestone, making it undetectable.</li>
+                <li><strong>SILENT GLIDE:</strong> Though heavy, its unique musculature allows it to glide silently from high perches to attack prey from above.</li>
+                <li><strong>EXTREME DURABILITY:</strong> Its stone-like hide is resistant to all forms of standard small-arms fire and physical trauma.</li>
+            </ul>
+            <div class="monster-section-header">Protocol & Countermeasures</div>
+            <ul class="monster-weaknesses">
+                <li><strong>PROTOCOL 8-G:</strong> Operations must take place at dawn or dusk, during its transition phase when it is most vulnerable.</li>
+                <li><strong>COUNTERMEASURE:</strong> High-yield explosives or sustained fire from sonic cannons can shatter its crystalline structure. Forcing it into prolonged darkness will deplete its energy and induce dormancy.</li>
+                <li><strong>WARNING:</strong> Never assume a statue is just a statue in a known SBA-02 activity zone. Confirm all architectural features with historical records.</li>
+            </ul>
+            <div class="monster-section-header">Plot Hooks & Mission Briefs</div>
+            <ul class="monster-hooks">
+                <li>A rash of disappearances has occurred in the city's old town district. All victims were last seen at night near buildings known for their gothic architecture.</li>
+                <li>A historian studying the old Havenwood church swears that the number of gargoyles on its roof changes from day to day.</li>
+            </ul>
+            <div class="monster-notes">
+                <div class="monster-section-header">FIELD LOG (INVESTIGATOR NOTES)</div>
+                <textarea rows="4" placeholder="[DATE]: We've confirmed a nest of three SBA-02s on the old clock tower. They're using it as a hunting perch. Planning a dawn raid with sonic charges."></textarea>
+            </div>
+        </div>
+
+        <!-- ENTITY 21: UNSTABLE GENETIC CHIMERA (JABBERWOCKY) -->
+        <div class="monster-card" data-name="ENTITY ID: VGE-01 Unstable Genetic Chimera Jabberwocky">
+            <h2 class="monster-name">ENTITY ID: VGE-01 (JABBERWOCKY)</h2>
+            <div class="monster-tagline">CLASSIFICATION: UNSTABLE GENETIC CHIMERA</div>
+            <div class="monster-section-header">Description / Profile</div>
+            <p class="monster-description">A catastrophic failure in genetic engineering, the VGE-01 is a creature with a hyper-active, unstable genome. It constantly and painfully mutates, shifting its biological traits in a chaotic blend of reptilian, insectoid, and mammalian features. It is driven mad by the process and is contained within a heavily secured quarantine zone known as the "Tulgey Wood."</p>
+            <div class="monster-section-header">Threat Assessment</div>
+            <div class="monster-stats">
+                <span class="stat-label">Designation:</span> <span class="stat-value">KAIJU-CLASS THREAT</span>
+                <span class="stat-label">Harm Rating:</span> <span class="stat-value">10 (Unpredictable/Highly Destructive)</span>
+                <span class="stat-label">Vulnerability:</span> <span class="stat-value">Genomic Destabilizing Agents, Cryogenic Temperatures, Core Brain Trauma</span>
+                <span class="stat-label">Reported Sector:</span> <span class="stat-value">Q-Zone "Tulgey Wood" (Rocky Mountain NP)</span>
+            </div>
+            <div class="monster-section-header">Recorded Movements (Abilities)</div>
+            <ul class="monster-abilities">
+                <li><strong>CHAOTIC MUTATION:</strong> Its primary and most dangerous trait. Can spontaneously develop armored plates, acidic spit, extra limbs, or camouflage in response to threats.</li>
+                <li><strong>RAPID REGENERATION:</strong> The unstable genome allows for incredibly fast tissue regeneration, making it nearly impossible to neutralize with conventional weapons.</li>
+                <li><strong>"BURBLING":</strong> A unique vocalization caused by its constantly reconfiguring respiratory system. The sound has a disorienting effect on human listeners.</li>
+            </ul>
+            <div class="monster-section-header">Protocol & Countermeasures</div>
+            <ul class="monster-weaknesses">
+                <li><strong>PROTOCOL 10-J:</strong> Containment is the only objective. No personnel are to enter the Q-Zone without Level-5 authorization. Engagement is forbidden unless a containment breach is imminent.</li>
+                <li><strong>COUNTERMEASURE:</strong> In case of breach, deploy airborne Cryo-Agents to slow its metabolic and mutational rate, then target the original, protected brain stem with high-penetration ordnance.</li>
+                <li><strong>R&D NOTE:</strong> Study of VGE-01's regeneration is a top priority, but all attempts to harvest tissue have resulted in catastrophic failure.</li>
+            </ul>
+            <div class="monster-section-header">Plot Hooks & Mission Briefs</div>
+            <ul class="monster-hooks">
+                <li>A seismic event has damaged the perimeter fence of the "Tulgey Wood" Q-Zone. An animal that cannot be described has been sighted by a terrified park ranger.</li>
+                <li>A rival organization has sent a team into the Q-Zone to try and secure a genetic sample. They are now a liability that needs to be "cleaned up."</li>
+            </ul>
+            <div class="monster-notes">
+                <div class="monster-section-header">FIELD LOG (INVESTIGATOR NOTES)</div>
+                <textarea rows="4" placeholder="[DATE]: Drone surveillance shows VGE-01 has developed wings again. It's testing the eastern fence. Containment integrity is at 85%. Requesting deployment of automated defense turrets."></textarea>
+            </div>
+        </div>
+        
+        <!-- ENTITY 22: SURVIVING PLESIOSAURID SPECIES (LOCH NESS MONSTER) -->
+        <div class="monster-card" data-name="ENTITY ID: LSA-01 Surviving Plesiosaurid Species Loch Ness Monster Nessie">
+            <h2 class="monster-name">ENTITY ID: LSA-01 (NESSIE)</h2>
+            <div class="monster-tagline">CLASSIFICATION: SURVIVING PLESIOSAURID SPECIES</div>
+            <div class="monster-section-header">Description / Profile</div>
+            <p class="monster-description">A relic population of a freshwater-adapted plesiosaur species, previously thought extinct. This small population survived in the unique ecosystem of Lake Havenwood, which is deep enough and geothermally active enough to support them. They are primarily piscivores and are extremely reclusive, rarely surfacing.</p>
+            <div class="monster-section-header">Threat Assessment</div>
+            <div class="monster-stats">
+                <span class="stat-label">Designation:</span> <span class="stat-value">AQUATIC RELIC</span>
+                <span class="stat-label">Harm Rating:</span> <span class="stat-value">2 (Non-Aggressive, Elusive)</span>
+                <span class="stat-label">Vulnerability:</span> <span class="stat-value">Acoustic Disruption, Water Chemistry Changes, Surface Exposure</span>
+                <span class="stat-label">Reported Sector:</span> <span class="stat-value">Lake Havenwood (Deep Trenches)</span>
+            </div>
+            <div class="monster-section-header">Recorded Movements (Abilities)</div>
+            <ul class="monster-abilities">
+                <li><strong>DEEP DIVER:</strong> Capable of diving to the deepest parts of the lake to avoid detection and hunt.</li>
+                <li><strong>LOW METABOLISM:</strong> Can go for extremely long periods between feedings, allowing it to survive on the lake's limited food supply.</li>
+                <li><strong>PASSIVE CAMOUFLAGE:</strong> Its dark, mottled skin makes it nearly invisible in the lake's murky depths.</li>
+            </ul>
+            <div class="monster-section-header">Protocol & Countermeasures</div>
+            <ul class="monster-weaknesses">
+                <li><strong>PROTOCOL 2-N:</strong> Protect and conceal. The LSA-01 population is critically endangered and must be protected from external threats and public discovery.</li>
+                <li><strong>COUNTERMEASURE:</strong> Project Chimera operates the "Lake Havenwood Geological Survey" as a cover to maintain a permanent sonar grid, warning away civilian boaters from nesting areas.</li>
+                <li><strong>NOTE:</strong> The species appears to be intelligent and will actively avoid boats and human activity. Maintaining the "hoax" narrative is the most effective containment strategy.</li>
+            </ul>
+            <div class="monster-section-header">Plot Hooks & Mission Briefs</div>
+            <ul class="monster-hooks">
+                <li>A well-funded cryptozoology team with military-grade sonar equipment is arriving in Havenwood to "find Nessie," threatening to expose the creature.</li>
+                <li>A new invasive fish species is threatening the LSA-01's primary food source. The team must find a way to remove the invasive species without harming the local ecosystem.</li>
+            </ul>
+            <div class="monster-notes">
+                <div class="monster-section-header">FIELD LOG (INVESTIGATOR NOTES)</div>
+                <textarea rows="4" placeholder="[DATE]: Sonar tagged a juvenile LSA-01. The population is breeding successfully. The cover story about 'underwater gas vents' causing strange readings seems to be holding for now."></textarea>
+            </div>
+        </div>
+
+        <!-- ENTITY 23: APEX AVIAN PREDATOR (ROC) -->
+        <div class="monster-card" data-name="ENTITY ID: CAA-01 Apex Avian Predator Roc">
+            <h2 class="monster-name">ENTITY ID: CAA-01 (ROC)</h2>
+            <div class="monster-tagline">CLASSIFICATION: APEX AVIAN PREDATOR</div>
+            <div class="monster-section-header">Description / Profile</div>
+            <p class="monster-description">A manifestation of avian gigantism, likely a genetic throwback to prehistoric condor species. With a wingspan exceeding 30 meters, the CAA-01 is an apex predator capable of lifting prey as large as adult moose. It nests on the highest, most inaccessible mountain peaks in the region.</p>
+            <div class="monster-section-header">Threat Assessment</div>
+            <div class="monster-stats">
+                <span class="stat-label">Designation:</span> <span class="stat-value">SKY TITAN</span>
+                <span class="stat-label">Harm Rating:</span> <span class="stat-value">9 (Asset Damage/Predation)</span>
+                <span class="stat-label">Vulnerability:</span> <span class="stat-value">Jet Engine Intake, High-Yield Explosives, Attacks on Nesting Grounds</span>
+                <span class="stat-label">Reported Sector:</span> <span class="stat-value">High Mountain Peaks / Remote Valleys</span>
+            </div>
+            <div class="monster-section-header">Recorded Movements (Abilities)</div>
+            <ul class="monster-abilities">
+                <li><strong>IMMENSE LIFTING STRENGTH:</strong> Talons are capable of puncturing steel and lifting objects weighing up to two tons.</li>
+                <li><strong>HURRICANE-FORCE GUSTS:</strong> The down-draft from its wings can reach speeds of over 150 km/h, capable of flipping vehicles and leveling small structures.</li>
+                <li><strong>ARMORED FEATHERS:</strong> Feathers have a dense keratin structure, providing significant protection from small-arms fire.</li>
+            </ul>
+            <div class="monster-section-header">Protocol & Countermeasures</div>
+            <ul class="monster-weaknesses">
+                <li><strong>PROTOCOL 9-R:</strong> Reroute all civilian and military air traffic around the subject's known hunting grounds. Ground engagement is the only viable option.</li>
+                <li><strong>COUNTERMEASURE:</strong> Lure the entity to lower altitudes using large animal carcasses as bait. Target the wing joints with heavy anti-materiel rifles.</li>
+                <li><strong>WARNING:</strong> Subject is highly intelligent and will learn to avoid obvious threats. Do not use the same tactics twice.</li>
+            </ul>
+            <div class="monster-section-header">Plot Hooks & Mission Briefs</div>
+            <ul class="monster-hooks">
+                <li>A small commuter plane has vanished from radar over the Rockies. The wreckage has been found, but the fuselage is missing, as if it were carried away.</li>
+                <li>A massive shadow passed over Havenwood, causing a brief power outage. Now, a local rancher is reporting that his prize bull has disappeared from a locked pen.</li>
+            </ul>
+            <div class="monster-notes">
+                <div class="monster-section-header">FIELD LOG (INVESTIGATOR NOTES)</div>
+                <textarea rows="4" placeholder="[DATE]: Satellite imagery confirms a CAA-01 nest on the peak of Mt. Sheridan. There are two eggs. This complicates neutralization protocols. Switching to a monitoring and containment mission."></textarea>
+            </div>
+        </div>
+
     </main>
 
     <!-- JAVASCRIPT FOR SEARCH AND NOTES PERSISTENCE -->
@@ -671,9 +1082,7 @@
             let cards = container.getElementsByClassName('monster-card');
 
             for (let i = 0; i < cards.length; i++) {
-                // Check against the data-name attribute which contains all key terms
                 let name = cards[i].getAttribute('data-name');
-                
                 if (name && name.toLowerCase().indexOf(filter) > -1) {
                     cards[i].classList.remove('hidden');
                 } else {
@@ -682,7 +1091,6 @@
             }
         }
 
-        // Keeper Notes Persistence (using Local Storage)
         function saveNotes() {
             const textareas = document.querySelectorAll('.monster-card textarea');
             textareas.forEach((textarea, index) => {
@@ -700,7 +1108,6 @@
                     textarea.value = savedNote;
                 }
             });
-            // Add event listeners to save notes automatically on input change
             textareas.forEach(textarea => {
                 textarea.addEventListener('input', saveNotes);
             });

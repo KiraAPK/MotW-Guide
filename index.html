@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SECURE FILE 404-ALPHA | ENTITY DATABASE</title>
-
+    <script src="https://cdn.tailwindcss.com"></script>
     <!-- CLASSIFIED CSS STYLING -->
     <style>
         :root {
@@ -128,6 +128,15 @@
             font-size: 0.9em;
             text-transform: uppercase;
         }
+        
+        .monster-image {
+            /* Basic styling for the image */
+            max-width: 100%; 
+            height: auto;
+            object-fit: cover; /* Cover the area, might crop */
+            aspect-ratio: 16 / 9; /* Common aspect ratio */
+            background-color: #111; /* Dark background for placeholders */
+        }
 
         .monster-section-header {
             font-weight: bold;
@@ -247,6 +256,7 @@
         <div class="monster-card" data-name="ENTITY ID: L-02A Lycanthropic Agent Werewolf">
             <h2 class="monster-name">ENTITY ID: L-02A (WEREWOLF)</h2>
             <div class="monster-tagline">CLASSIFICATION: LYCANTHROPIC AGENT (WEREWOLF)</div>
+             <img src="images/werewolf.png" alt="Werewolf Image Placeholder" class="monster-image my-4 rounded-md border border-gray-600 shadow-md" onerror="this.onerror=null; this.src='https://placehold.co/600x338/292929/f0f0f0?text=IMAGE+MISSING';">
             <div class="monster-section-header">Description / Profile</div>
             <p class="monster-description">Subject is a human infected with a heavily mutated strain of canine pathogen, hypothesized to be an ancient, stable variant of the Rabies virus. The infection causes irreversible cellular restructuring during cyclical transformation, which occurs <strong>every four (4) days</strong>. Contrary to folklore, transformation is NOT moon-dependent.</p>
             <div class="monster-section-header">Threat Assessment</div>
